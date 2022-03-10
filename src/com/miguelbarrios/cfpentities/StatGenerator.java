@@ -5,15 +5,16 @@ import java.util.Map;
 
 public class StatGenerator {
 	
+	private Data data;
 	
-	public void inRangeAllTimeWinner(int startYear, int endYear) {
-		Map<String, List<Poll>> data = Data.getPollData();
-		
-		for(String pollName : data.keySet()) {
-			List<Poll> polls = data.get(pollName);
-			for(Poll poll : polls) {
-				System.out.println(String.format("%s season: %d week: %d ", pollName, poll.getSeason(), poll.getWeek()));
-			}
+	public StatGenerator(Data data) {
+		this.data = data;
+	}
+	
+	public void inRangeAllTimeWinner(String pollName, int startYear, int stopYear) {
+		List<Poll> polls = data.getAllPolls("AP Top 25", 2019, 2021);
+		for(Poll poll : polls) {
+			poll.displayPoll();
 		}
 	}
 }

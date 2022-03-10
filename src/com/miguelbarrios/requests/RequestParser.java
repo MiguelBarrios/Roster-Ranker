@@ -1,6 +1,8 @@
 package com.miguelbarrios.requests;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,17 +22,15 @@ public class RequestParser {
 	}
 	
 	
-	public void rankingParser(String response, boolean regularSeason) {
+	public void rankingParser(String response, boolean regularSeason, Data dataHandler) {
+		//System.out.println(response);
+		Map<String, List<Poll>> polls = new HashMap<>();
+		
 		JSONArray arr = new JSONArray(response);
 		JSONObject obj = arr.getJSONObject(0);
 		JSONArray items = (JSONArray)obj.get("polls");
-		int week;
-		if(regularSeason) {
-			week = obj.getInt("week");
-		}
-		else {
-			week = -1;
-		}
+		
+		int week = (regularSeason) ? obj.getInt("week") : -1;
 		int season = obj.getInt("season");
 		
 		for(int i = 0; i < items.length(); ++i) {
@@ -52,7 +52,9 @@ public class RequestParser {
 				PollItem item = new PollItem(school, rank, conference, points);
 				currentPoll.addItem(item);
 			}
-			Data.addPoll(currentPoll);
-		}		
+			
+			dataHandler.addPoll(currentPoll);
+
+		}
 	}
 }

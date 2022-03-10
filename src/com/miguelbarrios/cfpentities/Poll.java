@@ -35,7 +35,7 @@ public class Poll {
 	}
 	
 	public String pollInfo() {
-		return name + " " + "week: " + week;
+		return name + " " + " season: " + season + " week: " + week;
 	}
 	
 	public int getWeek() {
