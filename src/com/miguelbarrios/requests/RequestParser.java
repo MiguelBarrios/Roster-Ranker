@@ -22,6 +22,7 @@ public class RequestParser {
 		JSONObject obj = arr.getJSONObject(0);
 		JSONArray items = (JSONArray)obj.get("polls");
 		int week = obj.getInt("week");
+		int season = obj.getInt("season");
 		
 		for(int i = 0; i < items.length(); ++i) {
 			JSONObject element = (JSONObject) items.get(i);
@@ -31,7 +32,7 @@ public class RequestParser {
 			if(pollName.equals("AFCA Division II Coaches Poll") || pollName.equals("FCS Coaches Poll"))
 				continue;
 
-			Poll currentPoll = new Poll(pollName, week);
+			Poll currentPoll = new Poll(pollName, week, season);
 			for(int j = 0; j < elements.length(); ++j) {
 				JSONObject pollObj = elements.getJSONObject(j);
 				String cur = pollObj.toString();

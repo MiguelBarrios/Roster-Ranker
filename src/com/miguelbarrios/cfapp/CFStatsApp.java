@@ -16,10 +16,12 @@ public class CFStatsApp {
 		RequestHandler requestHandler = new RequestHandler();
 		RequestParser parser = new RequestParser();
 		
-		
-		String requestAPPoll = requestBuilder.buildPollRequest(2021, 1);
-		String response = requestHandler.sendGetRequest(requestAPPoll);
-		parser.rankingParser(response);
+		for(int i = 1; i <= 15; ++i ) {
+			String requestAPPoll = requestBuilder.buildPollRequest(2021, i);
+			String response = requestHandler.sendGetRequest(requestAPPoll);
+			parser.rankingParser(response);
+		}
+
 		
 		
 		Data.displayPolls();

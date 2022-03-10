@@ -10,12 +10,15 @@ public class Poll {
 	private String name;
 	
 	private int week;
+	
+	private int season;
 
 	private List<PollItem> items;
 	
-	public Poll(String name, int week) {
+	public Poll(String name, int week, int season) {
 		this.name = name;
 		this.week = week;
+		this.season = season;
 		items = new ArrayList<>();
 	}
 
