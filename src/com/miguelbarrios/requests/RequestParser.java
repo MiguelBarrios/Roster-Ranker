@@ -20,12 +20,17 @@ public class RequestParser {
 	}
 	
 	
-	public void rankingParser(String response) {
-		
+	public void rankingParser(String response, boolean regularSeason) {
 		JSONArray arr = new JSONArray(response);
 		JSONObject obj = arr.getJSONObject(0);
 		JSONArray items = (JSONArray)obj.get("polls");
-		int week = obj.getInt("week");
+		int week;
+		if(regularSeason) {
+			week = obj.getInt("week");
+		}
+		else {
+			week = -1;
+		}
 		int season = obj.getInt("season");
 		
 		for(int i = 0; i < items.length(); ++i) {

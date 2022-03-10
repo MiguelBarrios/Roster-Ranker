@@ -38,6 +38,22 @@ public class Poll {
 		return name + " " + "week: " + week;
 	}
 	
+	public int getWeek() {
+		return week;
+	}
+
+	public void setWeek(int week) {
+		this.week = week;
+	}
+
+	public int getSeason() {
+		return season;
+	}
+
+	public void setSeason(int season) {
+		this.season = season;
+	}
+
 	public void displayPoll() {
 		System.out.println(pollInfo());
 		for(PollItem item : items) {

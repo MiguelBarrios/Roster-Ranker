@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Data {
-	public static Map<String, List<Poll>> polls = new HashMap<>();
+	
+	private static Map<String, List<Poll>> polls = new HashMap<>();
 
 	public static void addPoll(Poll poll) {
 		if (!polls.containsKey(poll.getName())) {
@@ -14,6 +15,10 @@ public class Data {
 		} 
 		
 		polls.get(poll.getName()).add(poll);
+	}
+	
+	public static Map<String, List<Poll>> getPollData(){
+		return polls;
 	}
 	
 	public static void displayPolls() {
