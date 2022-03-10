@@ -5,6 +5,10 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.miguelbarrios.cfpentities.Data;
+import com.miguelbarrios.cfpentities.Poll;
+import com.miguelbarrios.cfpentities.PollItem;
+
 public class RequestParser {
 	public void teamGameStatsRequestParser(String response) {
 		System.out.println(response);

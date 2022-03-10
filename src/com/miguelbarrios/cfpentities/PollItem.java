@@ -1,4 +1,4 @@
-package com.miguelbarrios.requests;
+package com.miguelbarrios.cfpentities;
 
 public class PollItem {
 	

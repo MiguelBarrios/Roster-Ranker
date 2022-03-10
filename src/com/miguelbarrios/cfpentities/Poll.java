@@ -1,4 +1,4 @@
-package com.miguelbarrios.requests;
+package com.miguelbarrios.cfpentities;
 
 import java.util.ArrayList;
 import java.util.HashMap;

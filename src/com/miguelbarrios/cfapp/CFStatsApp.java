@@ -1,6 +1,6 @@
 package com.miguelbarrios.cfapp;
 
-import com.miguelbarrios.requests.Data;
+import com.miguelbarrios.cfpentities.Data;
 import com.miguelbarrios.requests.RequestBuilder;
 import com.miguelbarrios.requests.RequestHandler;
 import com.miguelbarrios.requests.RequestParser;
