@@ -8,7 +8,7 @@ public class PollItem {
 	
 	private String conference;
 	
-	private int point;
+	private int points;
 
 	private PollItem() {
 		
@@ -17,7 +17,7 @@ public class PollItem {
 	public PollItem(String school, int rank, String conference, int point) {
 		this.school = school;
 		this.rank = rank;
-		this.point = point;
+		this.points = point;
 		if(conference == null)
 			this.conference = "";
 		else
@@ -48,17 +48,17 @@ public class PollItem {
 		this.conference = conference;
 	}
 
-	public int getPoint() {
-		return point;
+	public int getPoints() {
+		return points;
 	}
 
 	public void setPoint(int point) {
-		this.point = point;
+		this.points = point;
 	}
 
 	@Override
 	public String toString() {
-		return "PollItem [school=" + school + ", rank=" + rank + ", conference=" + conference + ", point=" + point
+		return "PollItem [school=" + school + ", rank=" + rank + ", conference=" + conference + ", point=" + points
 				+ "]";
 	}
 	

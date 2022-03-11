@@ -42,6 +42,7 @@ public class Data {
 		
 		for(String pollName : polls.keySet()) {
 			List<Poll> content = polls.get(pollName);
+
 			for(Poll poll: content) {
 				poll.displayPoll();
 			}
@@ -68,7 +69,7 @@ public class Data {
 		}
 		
 		// get post season polls
-		String postSeasonPollRequest = requestBuilder.postSeasonPollRequest(2021);
+		String postSeasonPollRequest = requestBuilder.postSeasonPollRequest(year);
 		String response = requestHandler.sendGetRequest(postSeasonPollRequest);
 		parser.rankingParser(response, false, this);
 	}

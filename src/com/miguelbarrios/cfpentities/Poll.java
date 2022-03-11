@@ -20,6 +20,12 @@ public class Poll {
 		this.week = week;
 		this.season = season;
 		items = new ArrayList<>();
+		if(name.equals("AP Top 25"))
+			System.out.printf("name: %s season: %s week: %d\n", name, season, week);
+	}
+	
+	public List<PollItem> getItems() {
+		return this.items;
 	}
 
 	public void addItem(PollItem item) {
@@ -57,7 +63,7 @@ public class Poll {
 	public void displayPoll() {
 		System.out.println(pollInfo());
 		for(PollItem item : items) {
-			String res = String.format("\t%s coference: %s rank: %d points: %d", item.getSchool(), item.getConference(),item.getRank(), item.getPoint());
+			String res = String.format("\t%s coference: %s rank: %d points: %d", item.getSchool(), item.getConference(),item.getRank(), item.getPoints());
 			System.out.println(res);
 		}
 	}
