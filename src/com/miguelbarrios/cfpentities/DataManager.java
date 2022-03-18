@@ -7,11 +7,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiPredicate;
 
 import com.google.gson.Gson;
-import com.miguelbarrios.interfaces.HistoricalPollMatcher;
-import com.miguelbarrios.interfaces.PollMatcher;
-import com.miguelbarrios.requests.*;
+import com.miguelbarrios.requests.RequestBuilder;
+import com.miguelbarrios.requests.RequestHandler;
+import com.miguelbarrios.requests.RequestParser;
 import com.miguelbarrios.util.Utilities;
 
 public class DataManager {
@@ -58,21 +59,21 @@ public class DataManager {
 		this.data = new Data();
 	}
 
-	public List<HistoricalPolls> filterHistoricalPolls(String string, HistoricalPollMatcher matcher) {
+	public List<HistoricalPolls> filterHistoricalPolls(String str, BiPredicate<HistoricalPolls,String> matcher) {
 		List<HistoricalPolls> filtered = new ArrayList<>();
 		for (HistoricalPolls p : getHistoricalPolls()) {
-			if (matcher.matches(p, string)) {
+			if (matcher.test(p, str)) {
 				filtered.add(p);
 			}
 		}
 		return filtered;
 	}
 	
-	public List<Poll> filterPolls(String string, PollMatcher matcher) {
+	public List<Poll> filterPolls(String string, BiPredicate<Poll, String> matcher) {
 		List<Poll> filtered = new ArrayList<>();
 		for (HistoricalPolls p : getHistoricalPolls()) {
 			for(Poll poll : p.getPolls()) {
-				if (matcher.matches(poll, string)) {
+				if (matcher.test(poll, string)) {
 					filtered.add(poll);
 				}
 			}
