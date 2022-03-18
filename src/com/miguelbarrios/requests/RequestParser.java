@@ -19,6 +19,8 @@ public class RequestParser {
 	
 	public HistPollRanking parseHistoricalPoll(String json) {
 		HistPollRanking[] rankings = deserializer.fromJson(json, HistPollRanking[].class);
+		if(rankings.length == 0)
+			return null;
 		return rankings[0];
 	}
 	
