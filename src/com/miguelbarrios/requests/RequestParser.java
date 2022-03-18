@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
-import com.miguelbarrios.gson.HistPollRanking;
+import com.miguelbarrios.cfpentities.HistoricalPolls;
 
 public class RequestParser {
 		
@@ -17,8 +17,8 @@ public class RequestParser {
 		deserializer = new Gson();
 	}
 	
-	public HistPollRanking parseHistoricalPoll(String json) {
-		HistPollRanking[] rankings = deserializer.fromJson(json, HistPollRanking[].class);
+	public HistoricalPolls parseHistoricalPoll(String json) {
+		HistoricalPolls[] rankings = deserializer.fromJson(json, HistoricalPolls[].class);
 		if(rankings.length == 0)
 			return null;
 		return rankings[0];

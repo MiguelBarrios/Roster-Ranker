@@ -1,4 +1,4 @@
-package com.miguelbarrios.gson;
+package com.miguelbarrios.cfpentities;
 
 public class Rank {
 	private int rank;
@@ -19,4 +19,12 @@ public class Rank {
 		this.firstPlaceVotes = firstPlaceVotes;
 		this.points = points;
 	}
+
+	@Override
+	public String toString() {
+		return "Rank [rank=" + rank + ", school=" + school + ", conference=" + conference + ", firstPlaceVotes="
+				+ firstPlaceVotes + ", points=" + points + "]";
+	}
+	
+	
 }

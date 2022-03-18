@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.miguelbarrios.interfaces.HistoricalPollMatcher;
+import com.miguelbarrios.interfaces.PollMatcher;
 import com.miguelbarrios.requests.*;
-import com.miguelbarrios.gson.HistPollRanking;
 import com.miguelbarrios.util.Utilities;
 
 public class DataManager {
@@ -18,10 +19,28 @@ public class DataManager {
 	public static void main(String[] args) {
 		DataManager dataManager = new DataManager();
 		
-		//dataManager.loadDataFromFiles();
 		
-		int[] years = {2012,2011,2010};
-		dataManager.retrieveAndSaveData(years);
+		dataManager.loadDataFromFiles();
+		
+		// Filter Polls by year
+		List<HistoricalPolls> historicalPolls = dataManager.filterHistoricalPolls("2021", (poll, year) -> {
+			return poll.getSeason() == Integer.parseInt(year);
+		});
+		
+		
+		// Filter by pollName
+		List<Poll> polls = dataManager.filterPolls("AP Top 25", (Poll p, String pollName) -> {
+			return p.getPoll().equalsIgnoreCase(pollName);
+		});
+		
+		for(Poll poll : polls) {
+			System.out.println(poll);
+		}
+		
+		
+		System.out.println("End");
+		
+		
 	}
 
 	private RequestBuilder requestBuilder;
@@ -38,41 +57,64 @@ public class DataManager {
 		this.requestParser = new RequestParser();
 		this.data = new Data();
 	}
-	
 
-
-	public void getCFPHistPollBySeason(int year) {
-		
+	public List<HistoricalPolls> filterHistoricalPolls(String string, HistoricalPollMatcher matcher) {
+		List<HistoricalPolls> filtered = new ArrayList<>();
+		for (HistoricalPolls p : getHistoricalPolls()) {
+			if (matcher.matches(p, string)) {
+				filtered.add(p);
+			}
+		}
+		return filtered;
 	}
-
+	
+	public List<Poll> filterPolls(String string, PollMatcher matcher) {
+		List<Poll> filtered = new ArrayList<>();
+		for (HistoricalPolls p : getHistoricalPolls()) {
+			for(Poll poll : p.getPolls()) {
+				if (matcher.matches(poll, string)) {
+					filtered.add(poll);
+				}
+			}
+		}
+		
+		return filtered;
+	}
+	
+	
+	
 	// --------------------------- Completed Methods ------------------------------
+	public List<HistoricalPolls> getHistoricalPolls(){
+		
+		return data.getHistPolls();
+	}
 	
 	public void retrieveAndSaveData(int[] years) {
 		for(int year : years) {
-			List<HistPollRanking> polls  = getHistoricalPollsForSeason(year);
+			List<HistoricalPolls> polls  = getHistoricalPollsForSeason(year);
 			String fileName = "Polls" + year + ".txt";
 			saveDataToFile(fileName, polls);
 		}
 	}
 
-	public List<HistPollRanking> loadDataFromAPI() {
-		List<HistPollRanking> polls = getHistoricalPollsForSeason(2018);
+	public List<HistoricalPolls> loadDataFromAPI() {
+		List<HistoricalPolls> polls = getHistoricalPollsForSeason(2018);
 		addPolls(polls);
 		return polls;
 	}
 	
-	public void addPolls(List<HistPollRanking> polls) {
+	public void addPolls(List<HistoricalPolls> polls) {
 		data.addPolls(polls);
 	}
 
-	public List<HistPollRanking> getHistoricalPollsForSeason(int year) {
+	public List<HistoricalPolls> getHistoricalPollsForSeason(int year) {
 		System.out.print("Getting polls.");
-		List<HistPollRanking> polls = new ArrayList<>();
+		List<HistoricalPolls> polls = new ArrayList<>();
 		// Get polls for each week of the reqular season
 		for (int week = 1; week <= 15; ++week) {
 			String requestAPPoll = requestBuilder.regularSeasonPollRequest(year, week);
 			String response = requestHandler.sendGetRequest(requestAPPoll);
-			HistPollRanking ranking = requestParser.parseHistoricalPoll(response);
+			HistoricalPolls ranking = requestParser.parseHistoricalPoll(response);
 			polls.add(ranking);
 			System.out.print(".");
 		}
@@ -80,13 +122,13 @@ public class DataManager {
 
 		String postSeasonPollRequest = requestBuilder.postSeasonPollRequest(year);
 		String response = requestHandler.sendGetRequest(postSeasonPollRequest);
-		HistPollRanking finalRanking = requestParser.parseHistoricalPoll(response);
+		HistoricalPolls finalRanking = requestParser.parseHistoricalPoll(response);
 		polls.add(finalRanking);
 		return polls;
 	}
 	
 	public void loadDataFromFiles() {
-		List<HistPollRanking> polls = new ArrayList<>();
+		List<HistoricalPolls> polls = new ArrayList<>();
 		List<String> files = Utilities.getFilesInDir("src/Data/HistoricalPolls/");
 		for(String fileName : files) {
 			System.out.println("Reading file: " + fileName);
@@ -95,7 +137,7 @@ public class DataManager {
 				String line;
 				while((line = br.readLine()) != null) {
 					line = "[" + line + "]";
-					HistPollRanking poll = requestParser.parseHistoricalPoll(line);
+					HistoricalPolls poll = requestParser.parseHistoricalPoll(line);
 					polls.add(poll);
 					
 				}		
@@ -106,13 +148,13 @@ public class DataManager {
 		this.data.addPolls(polls);
 	}
 	
-	public void saveDataToFile(String fileName, List<HistPollRanking> polls) {
+	public void saveDataToFile(String fileName, List<HistoricalPolls> polls) {
 		Gson gson = new Gson();
 
 		try {
 			FileWriter fw = new FileWriter("src/Data/HistoricalPolls/" + fileName);
 			PrintWriter pw = new PrintWriter(fw);
-			for (HistPollRanking poll : polls) {
+			for (HistoricalPolls poll : polls) {
 				String json = gson.toJson(poll);
 				pw.println(json);
 			}
