@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.miguelbarrios.requests.RequestBuilder;
-import com.miguelbarrios.requests.RequestHandler;
-import com.miguelbarrios.requests.RequestParser;
+import com.miguelbarrios.api_data_collection.gson_entities.HistoricalPolls;
+
 
 public class Data {
 	

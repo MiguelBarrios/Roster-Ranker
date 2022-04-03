@@ -1,4 +1,4 @@
-package com.miguelbarrios.requests;
+package com.miguelbarrios.data_collection.requests;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

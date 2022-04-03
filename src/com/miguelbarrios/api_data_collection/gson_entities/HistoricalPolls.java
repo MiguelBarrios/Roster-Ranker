@@ -1,4 +1,4 @@
-package com.miguelbarrios.cfpentities;
+package com.miguelbarrios.api_data_collection.gson_entities;
 
 public class HistoricalPolls {
 	private int season;
@@ -33,9 +33,15 @@ public class HistoricalPolls {
 		return polls;
 	}
 	
-	
-	
-	
-	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append( seasonType + " Season: " + season + ", week: " + week);
+		sb.append("\n");
+		for(Poll poll : polls) {
+			sb.append("\t").append(poll).append("\n");
+		}
+		return sb.toString();
+	}
 	
 }

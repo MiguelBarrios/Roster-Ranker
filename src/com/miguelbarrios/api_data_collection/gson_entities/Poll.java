@@ -1,4 +1,4 @@
-package com.miguelbarrios.cfpentities;
+package com.miguelbarrios.api_data_collection.gson_entities;
 
 import java.util.Arrays;
 

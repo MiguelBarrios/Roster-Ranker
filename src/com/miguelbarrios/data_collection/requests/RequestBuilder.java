@@ -1,4 +1,4 @@
-package com.miguelbarrios.requests;
+package com.miguelbarrios.data_collection.requests;
 
 public class RequestBuilder {
 
