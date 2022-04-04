@@ -11,7 +11,8 @@ public class Pair {
 	}
 	
 	public String toString() {
-		return school + " " + points;
+		return String.format("%-20s : %d", school, points);
+		//return school + " " + points;
 	}
 
 	public String getSchool() {

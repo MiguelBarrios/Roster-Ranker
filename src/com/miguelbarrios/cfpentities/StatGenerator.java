@@ -18,19 +18,30 @@ public class StatGenerator {
 		this.data = data;
 	}
 	
-	public void APMostPointsInRange(int startYear, int stopYear) {
+	public List<SeasonPoll> filterByPollName(List<SeasonPoll> polls, String name) {
+		List<SeasonPoll> filtered = polls.stream().filter(p -> {
+			return p.getPollName().equals(name);
+		}).collect(Collectors.toList());
+		return filtered;
+	}
+	
+	public List<SeasonPoll> filterPollbyYearRange(List<SeasonPoll> polls, int startYear, int stopYear){
+		List<SeasonPoll> filtered = polls.stream().filter(p -> {
+			int year = p.getYear();
+			return year >= startYear && year <= stopYear;
+		}).collect(Collectors.toList());
+		return filtered;
+	}
+	
+	// Points starts being kept track on 2014
+	public List<Pair> AP25MostPointsInRange(int startYear, int stopYear) {
+		if(startYear < 2014) {
+			System.err.println("Warning point totals are not kept before 2014");
+		}
 		List<SeasonPoll> polls = data.getSeasonPolls();
 		
-		// Filter poll by name
-		List<SeasonPoll> filtered = polls.stream().filter(p -> {
-			if(p.getPollName().equals("AP Top 25")) {
-				int year = p.getYear();
-				return year >= startYear && year <= stopYear;
-			}
-			return false;
-		}).collect(Collectors.toList());
-		
-		filtered.sort((p1,p2) -> p1.getYear() -  p2.getYear());
+		List<SeasonPoll> filtered = filterByPollName(polls, "AP Top 25");
+		filtered = filterPollbyYearRange(filtered, startYear, stopYear);
 		
 		Map<String, Integer> map = new HashMap<>();
 		for(SeasonPoll poll : filtered) {
@@ -52,13 +63,21 @@ public class StatGenerator {
 		}
 		
 		pairs.sort((p1,p2) -> p2.getPoints() - p1.getPoints());
-		for(Pair pair : pairs) {
-			System.out.println(pair);
+		
+		System.out.println(" --- AP Total Points:  " + startYear + " -> " + stopYear);
+		
+		for(int i = 0; i  < 5; ++i) {
+			System.out.printf("%s : %d\n", pairs.get(i).getSchool(), pairs.get(i).getPoints());
 		}
 		
-		
-		
-		
+		return pairs;
+	}
+	
+	public void displayPolls() {
+		List<SeasonPoll> polls = data.getSeasonPolls();
+		for(SeasonPoll poll : polls) {
+			System.out.println(poll);
+		}
 	}
 	
 }
