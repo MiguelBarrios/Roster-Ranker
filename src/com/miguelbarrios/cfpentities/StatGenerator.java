@@ -37,20 +37,26 @@ public class StatGenerator {
 
 		List<SeasonPoll> filtered = polls.stream().filter(a -> a.getSeasonType().equals("postseason"))
 				.collect(Collectors.toList());
-
 		return filtered;
 	}
 
 	// scored by final ranking and number of Times in AP poll
 	public void APConsistRankedInRange(int startYear, int stopYear) {
-		List<SeasonPoll> filtered = data.getSeasonPolls();
-		filtered = filterByPollName(filtered, "AP Top 25");
-		filtered = filterPollbyYearRange(filtered, startYear, stopYear);
-		filtered.sort((a, b) -> a.getYear() - b.getYear());
-		filtered = filterByPostSeason(filtered);
+		
+		List<SeasonPoll> filtered = data.getSeasonPolls().stream()
+				.filter(p -> p.getSeasonType().equals("postseason"))
+				.filter(p -> p.getPollName().equals("AP Top 25"))
+				.filter(p -> {
+					return p.getYear() >= startYear && p.getYear() <= stopYear;
+				}).collect(Collectors.toList());
+				
+				
+//		List<SeasonPoll> filtered = data.getSeasonPolls();
+//		filtered = filterByPollName(filtered, "AP Top 25");
+//		filtered = filterPollbyYearRange(filtered, startYear, stopYear);
+//		filtered = filterByPostSeason(filtered);
 
 		Map<String, Integer> map = new HashMap<>();
-
 		for (SeasonPoll poll : filtered) {
 			for (Rank rank : poll.getRanks()) {
 				String school = rank.getSchool();
@@ -65,16 +71,11 @@ public class StatGenerator {
 		}
 		
 		List<Pair> pairs = new ArrayList<>();
-		for(String school : map.keySet()) {
-			Pair pair = new Pair(school, map.get(school));
-			pairs.add(pair);
-		}
+		for(String school : map.keySet())
+			pairs.add(new Pair(school, map.get(school)));
 		
 		pairs.sort((a,b) -> b.getPoints() - a.getPoints());
-		for(Pair pair : pairs) {
-			System.out.println(pair);
-		}
-
+		pairs.forEach(System.out::println);
 	}
 
 	// Points starts being kept track on 2014
