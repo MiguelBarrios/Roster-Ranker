@@ -17,7 +17,8 @@ public class CFStatsApp {
 		StatGenerator stats = new StatGenerator(loader.getData());
 		
 		//stats.AP25MostPointsInRange(2001, 2021);
-		stats.APConsistRankedInRange(1980,2021);
+		//stats.APConsistRankedInRange(1980,2021);
+		stats.numberOfAppearanceInPoll("AP Top 25", 2010, 2021, true);
 		
 //		List<SeasonPoll> polls = loader.getData().getSeasonPolls();
 //	
