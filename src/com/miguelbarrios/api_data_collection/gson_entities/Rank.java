@@ -25,6 +25,48 @@ public class Rank {
 		return "[" + school + "(" + rank + ") " + conference + ", firstPlaceVotes="
 				+ firstPlaceVotes + ", points=" + points + "]";
 	}
+
+	public int getRank() {
+		return rank;
+	}
+
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+
+	public String getSchool() {
+		return school;
+	}
+
+	public void setSchool(String school) {
+		this.school = school;
+	}
+
+	public String getConference() {
+		return conference;
+	}
+
+	public void setConference(String conference) {
+		this.conference = conference;
+	}
+
+	public int getFirstPlaceVotes() {
+		return firstPlaceVotes;
+	}
+
+	public void setFirstPlaceVotes(int firstPlaceVotes) {
+		this.firstPlaceVotes = firstPlaceVotes;
+	}
+
+	public int getPoints() {
+		return points;
+	}
+
+	public void setPoints(int points) {
+		this.points = points;
+	}
+	
+	
 	
 	
 }

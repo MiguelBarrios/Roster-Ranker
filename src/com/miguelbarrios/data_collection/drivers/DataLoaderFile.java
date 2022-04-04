@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.miguelbarrios.api_data_collection.gson_entities.HistoricalPolls;
+import com.miguelbarrios.enteties.SeasonPoll;
 import com.miguelbarrios.util.Utilities;
 
 public class DataLoaderFile extends DataLoader{
@@ -22,6 +23,8 @@ public class DataLoaderFile extends DataLoader{
 				while ((line = br.readLine()) != null) {
 					line = "[" + line + "]";
 					HistoricalPolls poll = parser.parseHistoricalPollJson(line);
+					List<SeasonPoll> seasonPolls = SeasonPoll.convertHistPollsToSeasonPoll(poll);
+					data.addSeasonalPolls(seasonPolls);
 					polls.add(poll);
 
 				}
