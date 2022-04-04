@@ -22,7 +22,7 @@ public class Rank {
 
 	@Override
 	public String toString() {
-		return "Rank [rank=" + rank + ", school=" + school + ", conference=" + conference + ", firstPlaceVotes="
+		return "[" + school + "(" + rank + ") " + conference + ", firstPlaceVotes="
 				+ firstPlaceVotes + ", points=" + points + "]";
 	}
 	
