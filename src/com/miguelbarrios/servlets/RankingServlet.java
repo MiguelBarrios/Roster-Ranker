@@ -27,22 +27,10 @@ public class RankingServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		List<SeasonPoll> polls = rankingsDAO.getRankings();
+		List<SeasonPoll> rankings = rankingsDAO.getRankings();
 		
-		PrintWriter pw = resp.getWriter();
-		if(polls == null) {
-			pw.println("Error reading data");
-		}
-		else {
-		
-			for(SeasonPoll poll : polls) {
-				pw.println(poll.getYear() + " " + poll.getPollName() + " " + poll.getSeasonType() + " "+ poll.getWeek());
-			}
-			
-			pw.close();
-		}
-		
-
+		req.setAttribute("rankings", rankings);
+		req.getRequestDispatcher("/WEB-INF/rankings.jsp").forward(req, resp);
 	}
 
 }
