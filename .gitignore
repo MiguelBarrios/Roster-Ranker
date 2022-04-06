@@ -2,3 +2,27 @@
 bin
 Config.java
 src/Data/*
+
+# Eclipse
+.project
+.classpath
+.settings
+
+# Package Files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Compiled class file
+*.class
+
+# Maven
+.mvn
+*.classpath
+*.project
+*.settings
+/bin/*
+/target/*
